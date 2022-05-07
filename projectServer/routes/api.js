@@ -16,12 +16,50 @@ router.get("/", async (req, res)=>{
 router.get("/date", async (req, res)=> {
     const dateFrom = req.query.dateFrom;
     const dateTo = req.query.dateTo;
-
+    
     try {
-
         const logItem = await Chart.find({createdAt:{$gte:new Date(dateFrom), $lte: new Date(dateTo)}}).sort({'createdAt':1})
-        console.log(logItem)
-        res.status(201).json(logItem)
+        
+        let emOpe = [];
+        let livre = [];
+        let emAnda = [];
+        let datasets = [];
+        for (const key in logItem) {
+            if (Object.hasOwnProperty.call(logItem, key)) { 
+                const element = logItem[key];
+                emOpe.push({x: element.time, y: element.emOperaçao})
+                livre.push({x: element.time, y: element.livres})
+                emAnda.push({x: element.time, y: element.emAndamento})
+            }
+        }
+        datasets = [
+            {
+                label: 'Em Operação',
+                data: emOpe,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                yAxisID: 'y',
+    
+            },
+            {
+                label: 'Livres',
+                data: livre,
+                borderColor: 'rgb(0, 255, 50)',
+                backgroundColor: 'rgba(0, 255, 50, 0.5)',
+                yAxisID: 'y',
+    
+            },
+            {
+                label: 'Em Andamento',
+                data: emAnda,
+                borderColor: 'rgb(116, 81, 248)',
+                backgroundColor: 'rgba(116, 81, 248, 0.5)',
+                yAxisID: 'y',
+    
+            },
+        ]    
+        
+        res.status(201).json(datasets)
     } catch (err) {
         res.status(401).json(err)
        
