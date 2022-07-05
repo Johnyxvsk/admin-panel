@@ -1,5 +1,6 @@
 .chart{
     width: 900px;
+    min-height: 500px;
     display: flex;
     flex-direction: column;
     padding: 15px;
@@ -11,10 +12,12 @@
     .menu{
         display: flex;
         position: absolute;
-        padding-left:18px;
-       
+        top: 46px;
+        padding-left: 6px;
+        
         .buttons{
             flex: 1;
+            display: flex;
             cursor: pointer;
 
         }    
@@ -59,21 +62,71 @@
             }
         }
 
-        .right{
+        .middle{
+        
             position: relative;
             display: flex;
-            left: 430px;
+            top: 22px;
+            left: 12px;
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.9);
+            flex: 1;
+            font-size: 30px;
             align-items: center;
             font-weight: bold;
+
+            .emOpe{
+                position: relative;
+
+                left: 12px;
+            }
+
+            .livres{
+                position: relative;
+                left: 123px;
+
+            }
+            .emAnda{
+                position: relative;
+                left: 184px;
+            }
+        }
+
+        .right{
+            position: absolute;
+            display: flex;
+            left: 678px;
+            top: 10px;
+            align-items: center;
+            font-weight: bold;
+            flex-direction: row;
             .live{
-                display: flex;
-                align-items: center;
+                .buttons{
+                    flex-direction: row;
+                    align-items: center;
+                }
+                .lastUpdate{
+                    position: absolute;
+                    top: 38px;
+                    left: 10px;
+                }
+               
                 &:hover{
-                    text-shadow: 0px 1px 1px rgba(87, 87, 87, 0.6);
+                    text-shadow: 0px 0px 2px rgba(100, 100, 100, 0.4);
                 }
             }
+            .metrics{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 5px;
+                span, p{
+                  
+                    white-space: nowrap;
+                }
+             }
+            
             .icon{
-                font-size: 35px;
+                font-size: 45px;
             }
             .ativo{
                 color: rgb(9, 141, 20);
@@ -82,5 +135,8 @@
                 color: rgb(230, 0, 0);;
             }
         }      
-    }    
+    }
+    .WeatherChart{
+        height: 200px;
+    }  
 }

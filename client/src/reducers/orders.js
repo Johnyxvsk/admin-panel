@@ -1,4 +1,4 @@
-export default (orders = [], action) => {
+ const orders = (orders = [], action) => {
     switch (action.type) {
         case 'FETCH_ALL':
             return action.payload
@@ -9,3 +9,5 @@ export default (orders = [], action) => {
             return orders;
     }
 }
+
+export default orders

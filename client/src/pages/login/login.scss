@@ -1,0 +1,35 @@
+.login{
+    display: flex;
+    flex: 1;
+    text-align: center;
+    
+    .container{
+        width: 250px;
+        min-height: 200px;
+        border: 0.5px solid rgb(233, 231, 231);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        
+        .logo{
+            font-size: 35px;
+            font-weight: bold;
+            color: purple;
+           
+        }
+        .google{
+            display: flex;
+            justify-content: center;
+        }
+        &:hover{
+
+            box-shadow: 2px 4px 10px 1px rgba(151, 151, 151, 0.47);
+            cursor: default
+        }  
+        
+        
+    }
+}

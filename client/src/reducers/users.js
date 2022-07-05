@@ -1,4 +1,4 @@
-export default (users = [], action) => {
+const users = (users = [], action) => {
     switch (action.type) {
         case 'FETCH_USERS':
             return users;
@@ -6,3 +6,4 @@ export default (users = [], action) => {
             return users;
     }
 }
+export default users

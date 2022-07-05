@@ -65,6 +65,19 @@
                     right: -5px;
 
                 }
+               .avatar{
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    box-shadow: 0px 0px 5px 1px rgba(125, 125, 125, 0.3);
+
+                }
+                .userName{
+                    
+                    font-size: 16px;
+                    font-weight: 600;
+                    padding-left: 5px;
+                }
 
                 &:hover{
                     color: #7451f8;

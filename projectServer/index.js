@@ -7,6 +7,7 @@ import usersRoute from "./routes/users.js";
 import ordersRoute from "./routes/orders.js";
 import apiRoute from "./routes/api.js";
 
+//import pup from './puppet.js';
 const app = express();
 dotenv.config()
 
@@ -27,6 +28,14 @@ app.use('/users', usersRoute)
 app.use('/orders', ordersRoute)
 app.use('/api', apiRoute)
 
-let now = new Date()
+let now = new Date('2022-05-12T01:35:50.770182Z')
+
+// try {
+//     pup
+// } catch (error) {
+//     console.log(error)
+// }
+
+
 
 console.log(now.toLocaleTimeString())

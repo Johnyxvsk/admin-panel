@@ -6,16 +6,19 @@ import Icon from "@material-ui/core/Icon";
 import {Link} from "react-router-dom"
 
 const Sidebar = () => {
+
+
+
   return (
     <div className='sidebar'>
         <div className="top">
-            <span className="logo">Admin Panel</span>
+            <span className="logo">Taon Dash</span>
         </div>
         <hr/>
         <div className="center">
           <ul>
             <p className="title">Principal:</p>
-            <Link to="/" style={{textDecoration: "none"}}>
+            <Link to="/home" style={{textDecoration: "none"}}>
               <li>
                 <Icon className="icon">dashboard</Icon>
                 <span>Dashboard</span>
@@ -50,6 +53,7 @@ const Sidebar = () => {
             <li>
               <Icon className="icon">logout</Icon>
               <span>Logout</span>
+
             </li> 
           </ul>
         </div>

@@ -1,7 +1,9 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { BrowserRouter,
 Routes,
 Route,
+Navigate,
+Switch
 } from "react-router-dom"
 
 import "./app.scss"
@@ -11,49 +13,29 @@ import List from "./pages/list/List"
 import Single from "./pages/single/Single";
 import Orders from "./pages/orders/Orders";
 import Profile from "./pages/profile/Profile";
-import { useDispatch, useSelector } from "react-redux";
-import {getOrders} from './actions/orders'
+import ErrorPage from "./pages/ErrorPage";
+
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 const App = () => {
-  const ordersState = useSelector(state => state.orders)
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getOrders())
-
-  }, [dispatch]);
-
-  useEffect(()=>{
-    const curOrders = localStorage.getItem('orders')
-    if(!curOrders){
-      setTimeout(() => {
-        localStorage.setItem('orders', JSON.stringify(ordersState))
-      }, 2000);
-    }
-  },[ordersState])
-  
+  const isAuthenticated = localStorage.getItem("profile");
 
   return ( 
     <div className="App">
+      <GoogleOAuthProvider clientId="378489164016-ef35o6rgn327hjih8bdndf0c9t59hq54.apps.googleusercontent.com">
       <BrowserRouter>
+    
         <Routes>
-          <Route path="/">
-            <Route index element={<Home/>}/>
-            <Route path="login" element={<Login/>} />
-            <Route exact path="users">
-              <Route index element={<List/>}/>
-              <Route path=':id' element={<Single/>}/>
-            </Route>
-            <Route exact path="orders">
-              <Route index element={<Orders/>}/>
-            </Route>
-            <Route exact path="profile" element={<Profile/>}/>
-          </Route>
+        
+          <Route path="/" element={isAuthenticated ? <Navigate to="/home" replace /> : <Login/>} />
+          <Route path="/home" element={<Home/>} />
+
+          <Route path="*" element={<ErrorPage/>}/>
+         
         </Routes>
       </BrowserRouter>
-      
+      </GoogleOAuthProvider>
     </div>
   );
 }
