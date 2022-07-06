@@ -1,41 +1,45 @@
 import React from "react";
-import { BrowserRouter,
+import { 
 Routes,
 Route,
-Navigate,
-Switch
+Navigate
 } from "react-router-dom"
 
 import "./app.scss"
 import Home from "./pages/home/Home"
 import Login from "./pages/login/Login"
-import List from "./pages/list/List"
-import Single from "./pages/single/Single";
+// import List from "./pages/list/List"
+// import Single from "./pages/single/Single";
 import Orders from "./pages/orders/Orders";
 import Profile from "./pages/profile/Profile";
 import ErrorPage from "./pages/ErrorPage";
 
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { AuthProvider } from "./hooks/useAuth";
 
+import { ProtectedLayout } from "./components/protectedRoutes/ProtectedLayout";
+import { HomeLayout } from "./components/protectedRoutes/HomeLayout";
 
 const App = () => {
-  const isAuthenticated = localStorage.getItem("profile");
+    
+  //const isAuthenticated = localStorage.getItem("profile");
 
   return ( 
     <div className="App">
-      <GoogleOAuthProvider clientId="378489164016-ef35o6rgn327hjih8bdndf0c9t59hq54.apps.googleusercontent.com">
-      <BrowserRouter>
-    
-        <Routes>
-        
-          <Route path="/" element={isAuthenticated ? <Navigate to="/home" replace /> : <Login/>} />
-          <Route path="/home" element={<Home/>} />
 
-          <Route path="*" element={<ErrorPage/>}/>
-         
-        </Routes>
-      </BrowserRouter>
-      </GoogleOAuthProvider>
+            <Routes>
+              <Route element={<HomeLayout />}>
+                <Route path="/" element={<Login />} />
+                <Route path="*" element={<ErrorPage/>}/>
+              </Route>
+
+              <Route element={<ProtectedLayout />}>
+                <Route path="/home" element={<Home />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="orders" element={<Orders />} />
+              </Route>
+              
+            </Routes>
+
     </div>
   );
 }

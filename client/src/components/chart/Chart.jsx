@@ -314,12 +314,14 @@ const Chart = () => {
         const weather = res.data.filter((item)=> {
           if(item.label === 'Temp' || item.label === 'Precipitação'){
               return item
-          }} )
+          }else return null
+        } )
   
         const chartData = res.data.filter((item)=>{
           if(item.label === 'Em Operação' || item.label === 'Livres' || item.label === 'Em Andamento'){
             return item
-        }})
+        }else return null
+      })
   
         chartRef.current.data.datasets = chartData;
   
@@ -374,12 +376,14 @@ const Chart = () => {
       const weather = res.data.filter((item)=> {
         if(item.label === 'Temp' || item.label === 'Precipitação'){
             return item
-        }} )
+        }else return null
+      } )
 
       const chartData = res.data.filter((item)=>{
         if(item.label === 'Em Operação' || item.label === 'Livres' || item.label === 'Em Andamento'){
           return item
-      }})
+      }else return null
+    })
 
       chartRef.current.data.datasets = chartData;
       weatherRef.current.data.datasets = weather;

@@ -1,18 +1,16 @@
-import React, {useState,} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import "./navbar.scss"
 
 import Icon from "@material-ui/core/Icon";
+import { useAuth  } from "../../hooks/useAuth";
 
 const NavBar = () => {
-  const navigate = useNavigate('')
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
-  const handleLogout = () =>{
-    setUser('')
-    localStorage.clear()
-    navigate('/')
-  }
+  const { logout, user } = useAuth();
+
+  const navigate = useNavigate('')
+
   return (
     <div className='navbar'>
       <div className="wrapper">
@@ -30,10 +28,10 @@ const NavBar = () => {
             <div className="count">1</div>
           </div>
           <div className="item">
-            <img className='avatar' src={user.userObj.picture} alt='avatar'/>
-            <span className='userName'>{user.userObj.name}</span>
+            <img className='avatar' src={user.picture} alt='avatar'/>
+            <span className='userName'>{user.name}</span>
           </div>
-          <div className="item" onClick={handleLogout}>
+          <div className="item" onClick={logout}>
             <Icon className="icon">logout</Icon>
           </div>
           
