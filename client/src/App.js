@@ -29,13 +29,15 @@ const App = () => {
             <Routes>
               <Route element={<HomeLayout />}>
                 <Route path="/" element={<Login />} />
-                <Route path="*" element={<ErrorPage/>}/>
+                <Route path="*" element={<Navigate replace to='/' />} />
               </Route>
 
               <Route element={<ProtectedLayout />}>
+                <Route path="*" element={<Navigate replace to='/' />} />
+
                 <Route path="/home" element={<Home />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="orders" element={<Orders />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/orders" element={<Orders />} />
               </Route>
               
             </Routes>
