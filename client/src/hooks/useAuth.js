@@ -11,10 +11,24 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const login = async (data) => {
-    setUser(jwt_decode(data.credential));
-    //let userData = jwt_decode(data.credential)
-    //setUserData(userData)
-    navigate("/home", { replace: true });
+
+    const accounts = [
+      "comercial@taondelivery.com.br",
+      "diogomrizzi@gmail.com",
+      "janaina.camargo_@live.com",
+      "desenvolvimento@taondelivery.com.br",
+      "bruno.lemospr@gmail.com",
+      "jbracale128@gmail.com"
+    ]
+    let userData = jwt_decode(data.credential)
+
+    if(accounts.includes(userData.email)){
+      setUser(userData);
+      navigate("/home", { replace: true });
+    }else{
+      alert('Not authorized')
+    }
+    
   };
 
   const logout = () => {
