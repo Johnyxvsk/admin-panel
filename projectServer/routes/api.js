@@ -42,12 +42,13 @@ router.get("/date", async (req, res)=> {
                 
             }
         }
+        console.log(tempItem)
         for (const key in tempItem) {
             if (Object.hasOwnProperty.call(tempItem, key)) {
                 const test = tempItem[key];
                 let createdAt = new Date(test.createdAt)
-                tempData.push({x: createdAt, y: test.temp.slice(0,3)})
-                precipitaData.push({x: createdAt, y: test.precipita.slice(0,3) })
+                tempData.push({x: createdAt, y: test.temp.toString().slice(0,-2)})
+                precipitaData.push({x: createdAt, y: test.precipita.toString().slice(0, -2) })
             }
         }
         datasets = [

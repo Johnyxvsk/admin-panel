@@ -155,9 +155,15 @@ export const options = {
     legend:{
       display: false,
 
-    }
-  }
-  ,
+    },
+    title: {
+      display: true,
+    
+      padding: {
+          top: 20,
+      }
+    },
+  },
   scales: {
     x:{
       type: 'time',
@@ -198,7 +204,10 @@ export const options = {
      position: 'left',
       grid:{
         display: false
-      }
+      },
+      ticks: {
+        beginAtZero: true
+    }
     },
     
   }
@@ -215,6 +224,11 @@ const Chart = () => {
   const [emOpe, setEmOpe] = useState()
   const [livres, setLivres] = useState()
   const [emAnda, setEmAnda] = useState()
+  
+  const [temp, setTemp] = useState('')
+  const [preci, setPreci] = useState('')
+  
+  
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -230,11 +244,37 @@ const Chart = () => {
       let res = await axios.get('/api')
       if (!check) {
         let createdAt =  new Date(res.data.logItem.createdAt)
+        let createdAttempItem =  new Date(res.data.tempItem.createdAt)
         setLastUpdate(createdAt.toLocaleTimeString())
         let emOperaçao = { x:createdAt , y: res.data.logItem.emOperaçao }
         let livres = { x: createdAt, y: res.data.logItem.livres }
         let emAndamento = { x: createdAt, y: res.data.logItem.emAndamento }
         
+        let tempLive = { x: createdAttempItem, y: res.data.tempItem.temp.toString().slice(0, -2) }
+        let precipitaLive = { x: createdAttempItem, y: res.data.tempItem.precipita.toString().slice(0, -2) }
+        console.log(tempLive)
+        setTemp(res.data.tempItem.temp)
+        setPreci(res.data.tempItem.precipita)
+        for (const key in weatherRef.current.data.datasets) {
+          if (Object.hasOwnProperty.call(weatherRef.current.data.datasets, key)) {
+              const obj = weatherRef.current.data.datasets[key];
+              console.log(obj)
+              switch (obj.label) {
+                case 'Temp':
+                  obj.data.push(tempLive)
+                  weatherRef.current.update();
+                  break;
+                case 'Precipitação':
+                  obj.data.push(precipitaLive)
+                  weatherRef.current.update();
+                  break;
+              
+                default:
+                  break;
+              }
+              weatherRef.current.update();
+          }
+      }
         for (const key in chartRef.current.data.datasets) {
           if (Object.hasOwnProperty.call(chartRef.current.data.datasets, key)) {
               const obj = chartRef.current.data.datasets[key];
@@ -464,8 +504,8 @@ const Chart = () => {
                     </div>
                 </div>
 
-                <div className='buttons'>
-                  <Icon className="icon" onClick={getChartByDate}>query_stats</Icon>
+                <div className='buttons' onClick={getChartByDate}>
+                  <Icon className="icon">calendar_month</Icon>
                 </div>
               </div>
             </div>
@@ -520,6 +560,14 @@ const Chart = () => {
           //   getElementsAtEvent(chartRef.current, event);
           // }}
           />
+          {liveToggle ?
+            <div className="weatherMenu"> 
+              <span className="precipita"><Icon className='icon'>water_drop</Icon>{preci}</span>
+              <span className="temp"><Icon className='icon'>thermostat</Icon>{temp}</span>
+            </div>
+            : "" 
+          }
+          
           <div className="WeatherChart">
             <Line ref={weatherRef} options={optionsWeather}
             data={chartData}
