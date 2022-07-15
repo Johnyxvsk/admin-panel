@@ -2,12 +2,19 @@ import React, {useState, useEffect} from 'react'
 import ChatHead from './ChatHead';
 
 import './chatMenu.scss'
+import FullChat from './FullChat';
 
-const ChatMenu = ({chatOpen, setchatOpen} ) => {
+const ChatMenu = ({chatOpen} ) => {
 
     const [anim, setanim] = useState('0px');
-      
-    console.log(chatOpen)
+    const [selectChat, setSelectChat] = useState(false);
+
+    
+    
+    const setChat = (selection) =>{
+        setSelectChat(selection)
+    }
+
     useEffect(() => {
         if(chatOpen){
             setanim('300px')
@@ -16,9 +23,15 @@ const ChatMenu = ({chatOpen, setchatOpen} ) => {
   return (
     
     <div className='chatMenu' style={{height: anim}}>
-        <ChatHead/>
-        <ChatHead/>
-        <ChatHead/>
+        {!selectChat ? <div>
+            <ChatHead userName='Test' lastMsg='yo cunt' setChat={setChat}/>
+            <ChatHead userName='Thing' lastMsg='wassup?' setChat={setChat}/>
+            <ChatHead userName='Joey' lastMsg='how u doin?' setChat={setChat}/>
+        </div>
+        :
+        <FullChat setChat={setChat}/>
+        } 
+        
     </div>
     
   )

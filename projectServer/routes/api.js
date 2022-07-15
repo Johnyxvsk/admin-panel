@@ -42,7 +42,6 @@ router.get("/date", async (req, res)=> {
                 
             }
         }
-        console.log(tempItem)
         for (const key in tempItem) {
             if (Object.hasOwnProperty.call(tempItem, key)) {
                 const test = tempItem[key];

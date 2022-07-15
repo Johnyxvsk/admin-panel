@@ -6,7 +6,9 @@ import path from 'path';
 import usersRoute from "./routes/users.js";
 import ordersRoute from "./routes/orders.js";
 import apiRoute from "./routes/api.js";
-//import defaultRoute from "./routes/defaultRoute.js";
+
+import {Server} from 'socket.io'
+import { createServer } from "http";
 
 //import pup from './puppet.js';
 const app = express();
@@ -15,7 +17,18 @@ dotenv.config()
 const PORT = process.env.PORT || 4000;
 
 const __dirname = path.resolve();
+const httpServer = createServer();
 
+const io = new Server(httpServer, {
+  cors:{
+    origin:"http://localhost:4000",
+    methods:["GET", "POST"],
+  },
+});  
+
+io.on('connection', (socket) => {
+    console.log('a user connected: ' + socket);
+  });
 
 app.use(express.static(path.join(__dirname, '/build')));
 app.use(express.json({ extended: true }))
@@ -36,13 +49,6 @@ app.get('/*', function(req, res) {
 });
 
 let now = new Date('2022-05-12T01:35:50.770182Z')
-
-// try {
-//     pup
-// } catch (error) {
-//     console.log(error)
-// }
-
 
 
 console.log(now.toLocaleTimeString())

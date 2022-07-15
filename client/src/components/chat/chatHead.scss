@@ -4,8 +4,8 @@
     padding: 5px;
     align-items: center;
     border: 1px solid green;
+    
     .chatAvatar{
-        flex: 1;
 
         width: 45px;
         height: 45px;
@@ -14,21 +14,24 @@
         background-color: rgb(60, 60, 245);
     }
     .chatName{
-        flex: 3;
+        flex: 2;
         padding-left: 5px;
         color: black;
+        font-weight: 600;
+        .lastMsg{
+            font-weight: 400;
+        }
     }
     .chatOptions{
-        flex: 1;
+        display: flex;
         height: 100%;
         align-items: center;
-
         &:hover{
-            background-color: rgba(1, 1, 180, 0.555);
+            background-color: rgba(1, 159, 180, 0.555);
         }
     }
 
     &:hover{
-        background-color: rgba(0, 0, 255, 0.3);
+        background-color: rgba(0, 153, 255, 0.3);
     }
 }
