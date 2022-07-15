@@ -1,0 +1,18 @@
+.chatMenu{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+
+    
+    width: 250px;
+    height: 0px;
+
+    border: 1px solid red;
+
+
+    left: -224px;
+    transition: height ease .45s;
+    background-color: white;
+    overflow: hidden;
+    
+}

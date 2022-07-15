@@ -1,16 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React from 'react'
 import "./navbar.scss"
 
 import Icon from "@material-ui/core/Icon";
 import { useAuth  } from "../../hooks/useAuth";
+import Chat from '../chat/Chat';
 
 const NavBar = () => {
 
   const { logout, user } = useAuth();
-
-  const navigate = useNavigate('')
-
   return (
     <div className='navbar'>
       <div className="wrapper">
@@ -20,8 +17,7 @@ const NavBar = () => {
         </div>
         <div className="items">
           <div className="item">
-            <Icon className="icon">chat_bubble_outline</Icon>
-            <div className="count">2</div>
+            <Chat />
           </div>
           <div className="item">
             <Icon className="icon">notifications</Icon>
