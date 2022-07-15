@@ -20,7 +20,6 @@ import { ProtectedLayout } from "./components/protectedRoutes/ProtectedLayout";
 import { HomeLayout } from "./components/protectedRoutes/HomeLayout";
 
 const App = () => {
-    
   //const isAuthenticated = localStorage.getItem("profile");
 
   return ( 

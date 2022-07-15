@@ -21,14 +21,12 @@ const httpServer = createServer();
 
 const io = new Server(httpServer, {
   cors:{
-    origin:"http://localhost:4000",
+    origin:"http://localhost:3000",
     methods:["GET", "POST"],
   },
 });  
 
-io.on('connection', (socket) => {
-    console.log('a user connected: ' + socket);
-  });
+
 
 app.use(express.static(path.join(__dirname, '/build')));
 app.use(express.json({ extended: true }))
@@ -40,6 +38,14 @@ mongoose
 .then(() => app.listen(PORT, ()=> console.log(`Server started ${PORT}`)))
 .catch((err)=>console.log(err.message))
 
+io.on('connection', (socket) => {
+    console.log('a user connected: ' + socket.id);
+    socket.on('msg', (data)=>{
+        console.log(data)
+    })
+});
+httpServer.listen(5000);
+
 app.use('/users', usersRoute)
 app.use('/orders', ordersRoute)
 app.use('/api', apiRoute)
@@ -47,6 +53,8 @@ app.use('/api', apiRoute)
 app.get('/*', function(req, res) {
     res.sendFile(path.resolve(__dirname) + '/build/index.html');
 });
+
+
 
 let now = new Date('2022-05-12T01:35:50.770182Z')
 

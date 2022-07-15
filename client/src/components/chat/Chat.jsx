@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
-import "./chat.scss"
-
 import Icon from "@material-ui/core/Icon";
 import ChatMenu from './ChatMenu';
 
+import "./chat.scss"
+
 const Chat = () => {
 
+    
     const [chatOpen, setchatOpen] = useState(false);
  
     const openChat = () =>{
