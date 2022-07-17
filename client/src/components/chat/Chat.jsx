@@ -2,37 +2,44 @@ import React, {useState, useEffect, useRef} from 'react'
 import Icon from "@material-ui/core/Icon";
 
 import "./chat.scss"
-import io from 'socket.io-client'
+import {io} from 'socket.io-client'
 const socket = io("http://localhost:4000")
 
-const Chat = () => {
+const Chat = ({toggleChat, userName}) => {
     const [anim, setanim] = useState('0px');
 
-    const [chatID, setChatID] = useState('')
-    const [chat, setChat] = useState([])
-    const [inRoom, setInRoom] = useState(false)
+    const [chatID, setChatID] = useState(socket.id)
+    const [chatHist, setChatHist] = useState([])
+    const [msg, setMsg] = useState()
+    const [inRoom, setInRoom] = useState()
     
     const inputRef = useRef();
-    const test = () =>{
-        console.log(chat)
-    }
+  
     const handleInRoom = () => {
-        inRoom
-          ? setInRoom(false)
-          : setInRoom(true);
+        inRoom ? setInRoom(false) : setInRoom(true);
     }
+
     const handleSend = () => {
-       console.log(chat)
+        let newMsg = {
+            msg: msg,
+            socketId: chatID
+        }
+        socket.emit('msg', newMsg);
+        inputRef.current.value= "";
+        setMsg("")
     }
     useEffect(() => {
-        socket.on('joinRoom', {room:123})
-        if(inRoom){
-            socket.on('updateChat', (chat) => {
-                setChat(chat)
-            })
-        }
+        
+        socket.emit('me', userName);
+        socket.on('me', (me)=> setChatID(me.name))
+        socket.on('chatHist', (chatHist)=> setChatHist(chatHist))
+        
+        
 
-    },[inRoom]);
+    },[userName, chatHist]);
+    useEffect(() => {
+        setanim('300px')
+    }, []);
   
     return (
         
@@ -45,7 +52,12 @@ const Chat = () => {
                     <div className="chatName">
                         {chatID}
                     </div>
-                    <div className="options">
+                    <div className="options" onClick={() => {
+                        setanim('0px')
+                        setTimeout(() => {
+                            toggleChat()
+                        }, 350);
+                        }}>
                         <Icon className="icon">close</Icon>
 
                     </div>
@@ -55,7 +67,7 @@ const Chat = () => {
                     {inRoom && `You Have Entered The Room` }
                     {!inRoom && `Outside Room` }
                   
-                    {chat.map((data, idx)=>{
+                    {chatHist.map((data, idx)=>{
                         return (<p key={idx}> {data.socketId}: {data.msg} </p>)
                     })}
                 </div>
@@ -66,7 +78,16 @@ const Chat = () => {
                     </div>
                 
                     <div className="input">
-                        <input ref={inputRef} id="textarea" name="textarea" />
+                        <input ref={inputRef} id="textarea" name="textarea" onChange={(e)=>{
+                            if(e.target.value === 'Enter'){
+                                setMsg(e.target.value)
+                                handleSend()
+                                return
+                            }else{
+                                setMsg(e.target.value)
+                            }
+                            
+                        }} />
 
                     </div>
                     <div className="send" onClick={() => handleSend()}>

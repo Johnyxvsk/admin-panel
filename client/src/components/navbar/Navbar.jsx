@@ -8,7 +8,7 @@ import Chat from '../chat/Chat';
 const NavBar = () => {
   const [chatOpen, setchatOpen] = useState(false);
  
-  const openChat = () =>{
+  const toggleChat = () =>{
       setchatOpen(!chatOpen)
   }
   const { logout, user } = useAuth();
@@ -21,11 +21,11 @@ const NavBar = () => {
         </div>
         <div className="items">
           <div className="item">
-            <div className="chatIcon" onClick={() => {openChat()}}>
+            <div className="chatIcon" onClick={() => {toggleChat()}}>
                 <Icon className="icon">chat_bubble_outline</Icon>
                 <div className="count">2</div>
             </div>
-            {chatOpen && <Chat/>}
+            {chatOpen && <Chat userName={user.name} toggleChat={toggleChat}/>}
           </div>
           <div className="item">
             <Icon className="icon">notifications</Icon>

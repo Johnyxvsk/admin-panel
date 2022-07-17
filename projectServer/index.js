@@ -10,6 +10,7 @@ import apiRoute from "./routes/api.js";
 import {nanoid} from 'nanoid'
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { Socket } from 'dgram';
 
 //import pup from './puppet.js';
 const app = express();
@@ -45,25 +46,39 @@ app.use('/orders', ordersRoute)
 app.use('/api', apiRoute)
 
 
-let users = [{userName: 'test', status:'online'}]
+let users = [{id: '1234', name:'online'}]
 let rooms = [{id: 1234, chat:['hello ',' you fuck']}]
 
-let chatHist = [{msg:'hey', socketId:'123'}]
+let chatHist = [{msg:'hey', socketId:'123'},{msg:'hey', socketId:'godammit'}]
 
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {  
+  socket.on('me', user=>{
+    const newMe = {
+      id: nanoid(),
+      name: user,
+    }
 
-  socket.on('room', data => {
-    console.log('room join');
-    socket.join(data.room);
-    socket.emit('me', socket.id)
+    users.push(newMe)
+    socket.emit('me', newMe)
+    socket.emit('chatHist', chatHist)
+  })
 
-    socket.emit('updateChat', chatHist)
+  socket.on('msg', msgData => {
+    chatHist.push(msgData)
+    socket.emit('chatHist', chatHist)
+  })
+
+  socket.on('room', room => {
+    console.log();
+    socket.join(room);
+    socket.broadcast.to(room).emit('updateChat', {msg:'hey', socketId:'123'})
+    console.log(socket.id + " room join: " + room )
 
   });
   socket.on('leave room', data => {
     console.log('leaving room');
   
-    socket.leave(data.room)
+    socket.leave(data)
   });
 });
   // users.push(socket.id)

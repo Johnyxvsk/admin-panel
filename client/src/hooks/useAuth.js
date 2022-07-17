@@ -18,7 +18,8 @@ export const AuthProvider = ({ children }) => {
       "janaina.camargo_@live.com",
       "desenvolvimento@taondelivery.com.br",
       "bruno.lemospr@gmail.com",
-      "jbracale128@gmail.com"
+      "jbracale128@gmail.com",
+      "xavaskagaming@gmail.com"
     ]
     let userData = jwt_decode(data.credential)
 
