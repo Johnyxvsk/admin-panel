@@ -49,7 +49,7 @@ app.use('/api', apiRoute)
 let users = [{id: '1234', name:'online'}]
 let rooms = [{id: 1234, chat:['hello ',' you fuck']}]
 
-let chatHist = [{msg:'hey', socketId:'123'},{msg:'hey', socketId:'godammit'}]
+let chatHist = []
 
 io.on("connection", (socket) => {  
   socket.on('me', user=>{

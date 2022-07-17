@@ -31,6 +31,7 @@
         .chatHeader{
             display: flex;
             flex:1;
+            max-height: 37px;
             flex-direction: row;
             align-items: center;
             justify-content: space-evenly;
@@ -38,15 +39,21 @@
     
     
             .chatAvatar{
-                width: 45px;
-                height: 45px;
-                border-color: blue;
-                border-radius: 50%;
-                background-color: rgb(60, 60, 245);
+                display: flex;
+                width: 25px;
+                align-items: center;
+
+                img{
+                    width: 45px;
+                    height: 45px;
+                    border-color: blue;
+                    border-radius: 50%;
+                }
             }
             .chatName{
                 padding-left: 5px;
                 color: black;
+                font-size: 18px;
                 font-weight: 600;
             }
             .options{
@@ -58,9 +65,12 @@
         
         .chatContent{
             display: flex;
+            max-height: 200px;
+            overflow: hidden;
             flex:3;
             flex-direction: column;
             padding: 0px;
+            justify-content: flex-end;
         }
     
         .chatInputs{

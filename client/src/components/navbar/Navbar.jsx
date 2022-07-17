@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useCallback} from 'react'
 import "./navbar.scss"
 
 import Icon from "@material-ui/core/Icon";
@@ -8,9 +8,13 @@ import Chat from '../chat/Chat';
 const NavBar = () => {
   const [chatOpen, setchatOpen] = useState(false);
  
-  const toggleChat = () =>{
-      setchatOpen(!chatOpen)
-  }
+  // const toggleChat = () =>{
+  //     setchatOpen(!chatOpen)
+  // }
+  const toggleChat = useCallback(
+    () => setchatOpen(prev => !prev),
+    []
+)
   const { logout, user } = useAuth();
   return (
     <div className='navbar'>
@@ -25,7 +29,7 @@ const NavBar = () => {
                 <Icon className="icon">chat_bubble_outline</Icon>
                 <div className="count">2</div>
             </div>
-            {chatOpen && <Chat userName={user.name} toggleChat={toggleChat}/>}
+            {chatOpen && <Chat userName={user.name} userAvatar={user.picture} toggleChat={toggleChat}/>}
           </div>
           <div className="item">
             <Icon className="icon">notifications</Icon>
