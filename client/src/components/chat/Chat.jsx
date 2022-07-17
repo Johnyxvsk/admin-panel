@@ -3,7 +3,7 @@ import Icon from "@material-ui/core/Icon";
 
 import "./chat.scss"
 import {io} from 'socket.io-client'
-const socket = io("http://localhost:4000")
+const socket = io("ws://localhost:4000")
 
 const Chat = ({toggleChat, userName}) => {
     const [anim, setanim] = useState();
