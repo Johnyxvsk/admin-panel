@@ -9,9 +9,9 @@ const ChatMenu = ({chatOpen} ) => {
     const [anim, setanim] = useState('0px');
     const [selectChat, setSelectChat] = useState(false);
 
+
     
-    
-    const setChat = (selection) =>{
+    const pickChat = (selection) =>{
         setSelectChat(selection)
     }
 
@@ -24,12 +24,12 @@ const ChatMenu = ({chatOpen} ) => {
     
     <div className='chatMenu' style={{height: anim}}>
         {!selectChat ? <div>
-            <ChatHead userName='Test' lastMsg='yo cunt' setChat={setChat}/>
-            <ChatHead userName='Thing' lastMsg='wassup?' setChat={setChat}/>
-            <ChatHead userName='Joey' lastMsg='how u doin?' setChat={setChat}/>
+            <ChatHead userName='Test' lastMsg='yo cunt' pickChat={pickChat}/>
+            <ChatHead userName='Thing' lastMsg='wassup?' pickChat={pickChat}/>
+            <ChatHead userName='Joey' lastMsg='how u doin?' pickChat={pickChat}/>
         </div>
         :
-        <FullChat setChat={setChat}/>
+        <FullChat pickChat={pickChat}/>
         } 
         
     </div>

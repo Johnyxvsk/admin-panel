@@ -1,7 +1,102 @@
-.chatContainer{
-    position: relative;
-    .chatIcon{
+.chat{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+
+    
+    width: 250px;
+    height: 0px;
+
+    border: 1px solid red;
+
+    left: -228px;
+    top: 24px;
+    transition: height ease .45s;
+    background-color: white;
+    overflow: hidden;
+    .fullChat{
         display: flex;
+        flex-direction: column;
+        padding: 5px;
+        height: 600px;
+        .icon{
+            &:hover{
+                color: #7451f8;
+            }
+        }
+        &:hover{
+            color: black;
+        }
+        .chatHeader{
+            display: flex;
+            flex:1;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+            border-bottom: 0.5px solid lightgray;
+    
+    
+            .chatAvatar{
+                width: 45px;
+                height: 45px;
+                border-color: blue;
+                border-radius: 50%;
+                background-color: rgb(60, 60, 245);
+            }
+            .chatName{
+                padding-left: 5px;
+                color: black;
+                font-weight: 600;
+            }
+            .options{
+                display: flex;
+                height: 100%;
+                align-items: center;
+            }
+        }
+        
+        .chatContent{
+            display: flex;
+            flex:3;
+            flex-direction: column;
+            padding: 0px;
+        }
+    
+        .chatInputs{
+            display: flex;
+            flex:1;
+            max-height: 50px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            
+            border: 0.5px solid lightgray;
+            padding: 3px;
+            cursor: pointer;
+            textarea{
+                width: 157px;
+                height: 38px;
+                border: none;
+                outline: none;
+                background: transparent;
+    
+                &::placeholder{
+                    font-size: 14px;
+                }
+            }
+            .emoji{
+                padding-right: 4px;
+                border-right: 0.5px solid lightgray;
+            }
+            .send{
+                padding-left: 4px;
+                border-left: 0.5px solid lightgray;
+                align-items: center;
+                
+            }
+            
+        }
     }
-   
+    
 }
+ 

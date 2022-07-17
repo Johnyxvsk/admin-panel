@@ -2,10 +2,10 @@ import React from 'react'
 import Icon from "@material-ui/core/Icon";
 
 import './chatHead.scss'
-const ChatHead = ({userName, lastMsg, setChat } ) => {
+const ChatHead = ({userName, lastMsg, pickChat } ) => {
 
     const openChat = () =>{
-        setChat('TEST')
+        pickChat(true)
     }
     return (
         <div className='chatHead'>
