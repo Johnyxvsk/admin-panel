@@ -8,14 +8,12 @@ const socket = io("ws://localhost:4000")
 const Chat = ({toggleChat, userName}) => {
     const [anim, setanim] = useState();
 
-    const [chatID, setChatID] = useState(socket.id)
+    const [chatID, setChatID] = useState()
     const [chatHist, setChatHist] = useState([])
     const [msg, setMsg] = useState()
     const [emoji, setEmoji] = useState()
     const [inRoom, setInRoom] = useState()
 
-    const [opened, setopened] = useState(false)
-    
     const inputRef = useRef();
     const chatContentRef = useRef();
     const chatRef = useRef();
@@ -39,31 +37,27 @@ const Chat = ({toggleChat, userName}) => {
         socket.emit('msg', newMsg);
         inputRef.current.value= "";
         setMsg("")
+        inputRef.current.focus()
     }
     useEffect(() => {
-      
+        if(!chatID){
             socket.emit('me', userName);
             socket.on('me', (me)=> setChatID(me.name))
-            socket.on('chatHist', (chatHist)=> setChatHist(chatHist))
+        }
+        socket.on('chatHist', (chatHist)=> setChatHist(chatHist))
        
 
-        return ()=>{
-            setopened(false)
-        }
 
-    },[userName, chatHist]);
-
+    },[ chatID, userName, chatHist]);
     useEffect(() => {
-        setopened(true)
-        if(opened){
-            setanim('300px')
-        }
-        
-    }, [opened]);
-  
+      
+        setanim('300px')
+     
+    }, []);
+
     return (
         
-        <div className='chat' ref={chatRef}style={{height: anim}}>
+        <div className='chat' ref={chatRef} style={{height: anim }}>
             <div className='fullChat'>
                 <div className="chatHeader">
                     <div className="chatAvatar">
