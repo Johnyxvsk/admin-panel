@@ -5,6 +5,7 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
 import Widget from '../../components/widgets/Widget'
 import Chart from '../../components/chart/Chart'
+import ApexChart from '../../components/chart/ApexChart'
 
 
 const Home = () => {
@@ -16,7 +17,7 @@ const Home = () => {
         <div className="content">
         
           <div className="charts">
-            <Chart/>
+            <ApexChart/>
           </div>
           <div className="widgets">
           <Widget/>

@@ -81,51 +81,6 @@ io.on("connection", (socket) => {
     socket.leave(data)
   });
 });
-  // users.push(socket.id)
-
-  // socket.broadcast.emit('updateUsers', users)
-
-  // socket.emit('getAllUsers', users)
-  // socket.broadcast.emit("updateRooms", rooms)
-  
-  // socket.on('disconnect', ()=>{
-  //   users = users.filter((user)=> user !== socket.id)
-  //   socket.broadcast.emit('updateUsers', users)
-  //   socket.disconnect();
-  // })
-
-
-  // //Rooms
-  // socket.on('createRoom', ()=>{
-  //     const room = {
-  //         id: nanoid(4),
-  //         chat: [],
-  //     }
-  //     socket.join(room);
-  //     socket.emit("getRoom", room);
-  //     rooms.push(room)
-  //     socket.broadcast.emit("updateRooms", rooms)
-  // })
-
-  // socket.on("joinRoom", (room)=>{
-  //     socket.join(room.id)
-  // })
-
-  // socket.emit('getAllRooms', rooms)
-
-
-  // socket.on('msg', (data) =>{
-  //     rooms.map(room => {
-  //         if(room.id === data.id){
-  //             singleChat = {msg: data.msg, writer: data.socketId}
-  //             room.chat.push(singleChat)
-  //         }
-  //     })
-  //     console.log(data)
-  //     io.to(data.room).emit('chat', data)
-  // })
-
-
 
 app.get('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname) + '/build/index.html');

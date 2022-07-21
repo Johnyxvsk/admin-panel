@@ -86,13 +86,19 @@ export const options = {
     },
     filler: {
       propagate: true
+    },
+    tooltip:{
+      enabled: false
     }
   },
   datasets: {
   
     line: {
       //borderWidth: 5,
-      pointRadius: 0, // disable for all `'line'` datasets
+      
+      pointHoverRadius: 0, 
+      pointRadius: 0, 
+      pointHitRadius: 0,
     },
     
 
@@ -227,8 +233,6 @@ const Chart = () => {
   
   const [temp, setTemp] = useState('')
   const [preci, setPreci] = useState('')
-  
-  
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -237,8 +241,43 @@ const Chart = () => {
   const [chartData, setchartData] = useState({datasets:[]})
   const [liveToggle, setLiveToggle] = useState(false)
 
-  
+  useEffect(() => {
+    let el = chartRef.current.canvas;
+    el.addEventListener('mousemove', (e)=>{
+      crossHair(e , chartRef.current)
+    })
+    return () => {
+      el.removeEventListener('mousemove', (e)=> console.log('check: '));
+    };
+  }, []);
 
+  const crossHair = (mouse, chart) =>{
+    
+    chart.update('none')
+    const {ctx, chartArea:{ left, right, top, bottom}} = chart;
+    ctx.save();
+
+    ctx.strokeStyle = 'rgb(100, 100, 100)';
+    ctx.lineWidth = 1;
+    if(mouse.offsetX >= left && mouse.offsetX <= right && mouse.offsetY >= top && mouse.offsetY <= bottom){
+
+      ctx.beginPath();
+      ctx.moveTo(left, mouse.offsetY);
+      ctx.lineTo(right, mouse.offsetY);
+      ctx.stroke();
+      ctx.closePath();
+  
+      ctx.beginPath();
+      ctx.moveTo(mouse.offsetX, top);
+      ctx.lineTo(mouse.offsetX, bottom);
+      ctx.stroke();
+      ctx.closePath();
+    
+    }
+        
+  }
+
+  
   const getChartData = async (check) => {
     try {
       let res = await axios.get('/api')
@@ -376,30 +415,6 @@ const Chart = () => {
       console.log(err)
     }
   }
-  // function test(){
-  //   // const bgColor = {
-  //   //   id:"bgColor",
-  //   //   afterDatasetsDraw(chart, args, pluginOptions){
-  //   //     const {ctx, data, scales:{x,y} }=chart;
-
-  //   //     console.log(ctx.p0)
-     
-
-  //   //   }
-  //   // }
-  //   // chartRef.current.config.plugins.push(bgColor)
-
-  //   chartRef.current.config.data.datasets[3].fill = true;
-  //   chartRef.current.config.data.datasets[3].fill = true;
-    
-  //   chartRef.current.config.data.datasets[3].backgroundColor = 'rgba(0, 0, 248, 0.5)';
-    
-  //   console.log(chartRef.current.config.data.datasets)
-  //   chartRef.current.update()
-
-  // }
-
-  
 
   useEffect(() => {
     setchartData({datasets:[]})
@@ -452,17 +467,6 @@ const Chart = () => {
     setLiveToggle(false);
   };
 
-  
-  // const getDatasetAtEvent = (chartref, event) => {
-  //     console.log(event)
-  // }
-  // const getElementAtEvent = (chartref, event) => {
-  //   console.log(event)
-  // }
-  // const getElementsAtEvent = (chartref, event) => {
-  //   console.log(event)
-  // }
-
   return (
     <div>
 
@@ -478,7 +482,7 @@ const Chart = () => {
                       </div>
                       <DatePicker ref={dateFromRef}
                         selected={startDate}
-                        onChange={(date) => setStartDate(date)}
+                        onChange={(date) => console.log(date.toString())}
                         showTimeSelect
                         timeFormat="HH:mm"
                         timeIntervals={15}
@@ -552,8 +556,10 @@ const Chart = () => {
 
 
           </div>
-          <Line ref={chartRef} options={options}
+          <Line ref={chartRef}
+          options={options}
           data={chartData}
+          //onMouseMove={(e)=> crossHair(e, chartRef.current)}
           // onClick={(event) => {
           //   getDatasetAtEvent(chartRef.current, event);
           //   getElementAtEvent(chartRef.current, event);
